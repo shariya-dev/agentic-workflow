@@ -12,8 +12,8 @@ Any orchestrator MUST satisfy:
   (`openspec/changes/<id>/tasks/`); handovers (`.ai/handovers/<id>/`);
   engineering guide + active framework adapter.
 - **Outputs:** one reviewed branch per task, merged per wave.
-- **Spawning:** one agent per task. Briefing = task file + its handover +
-  `aeos/prompts/60-implementation.md`.
+- **Spawning:** one agent per task. Briefing = task file + its module handover
+  + `aeos/prompts/60-implementation.md` (which loads the engineering guide).
 - **Waves:** topological sort of task `depends_on`; wave N+1 starts only after
   wave N review passes.
 - **Isolation:** one git worktree per agent; the task's module scope and Out of

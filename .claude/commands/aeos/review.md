@@ -4,8 +4,9 @@ description: "AEOS phase 70 — produce review report artifacts and gate records
 
 Run AEOS phase **70-review** for change id: $ARGUMENTS
 
-1. **Gate check:** verify `.ai/reviews/<change-id>-g1.md` exists with
-   `Decision: APPROVED` (Stage 2 must have been authorized). If not, STOP.
+1. **Gate check:** verify `.ai/reviews/<change-id>-g1.md` exists and its
+   `Decision` is `APPROVED` or `APPROVED-WITH-CONDITIONS` (Stage 2 must have
+   been authorized). If missing or `REJECTED`, STOP.
 2. Read `aeos/prompts/70-review.md`. Ask the human which review to run (code
    review / security / performance / integration / release readiness) if not
    given in the arguments.

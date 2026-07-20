@@ -9,7 +9,7 @@ agents in git worktrees. Satisfies the Orchestrator Contract in
 | Contract requirement | Conductor mechanism |
 |----------------------|---------------------|
 | One agent per task | One Conductor workspace per task |
-| Agent briefing | Paste the task brief: task file path + handover path + `aeos/prompts/60-implementation.md` |
+| Agent briefing | Paste the task brief: task file + module handover + `aeos/prompts/60-implementation.md` (which loads the engineering guide) |
 | Wave ordering | Start wave N+1 workspaces only after wave N branches pass review |
 | Module isolation | Conductor's per-workspace git worktree; task Out of Scope is the boundary |
 | Review before merge | Each workspace branch gets `/aeos:review` (code review report) before merge |

@@ -21,8 +21,8 @@ not alter phase order, artifacts, or gates.
 Every orchestrator adapter MUST document how the tool satisfies the
 Orchestrator Contract (`docs/conductor-mapping.md`):
 
-- how agents are spawned (one per task) and briefed (task file + handover +
-  guide)
+- how agents are spawned (one per task) and briefed (task file + module
+  handover + implementation prompt, which loads the engineering guide)
 - how waves are executed in dependency order
 - how module isolation is enforced (e.g. one git worktree per agent)
 - how review flows before merge
