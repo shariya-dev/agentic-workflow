@@ -1,0 +1,42 @@
+{
+  "name": "@aeos/cli",
+  "version": "1.0.0",
+  "description": "AEOS — overlay the AI Engineering Operating System into any project. A safe, idempotent, framework-agnostic scaffolder for agentic software engineering (idea → production with human gates).",
+  "bin": {
+    "aeos": "bin/aeos.js"
+  },
+  "files": [
+    "bin/aeos.js",
+    "bin/aeos-install.sh",
+    "aeos/",
+    ".claude/commands/aeos/",
+    "docs/*.md",
+    "CLAUDE.md"
+  ],
+  "scripts": {
+    "test": "node bin/aeos.js --version"
+  },
+  "engines": {
+    "node": ">=16"
+  },
+  "keywords": [
+    "aeos",
+    "scaffold",
+    "cli",
+    "claude",
+    "claude-code",
+    "openspec",
+    "agentic",
+    "ai-engineering",
+    "spec-driven"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shariya-dev/agentic-workflow.git"
+  },
+  "bugs": {
+    "url": "https://github.com/shariya-dev/agentic-workflow/issues"
+  },
+  "homepage": "https://github.com/shariya-dev/agentic-workflow#readme"
+}

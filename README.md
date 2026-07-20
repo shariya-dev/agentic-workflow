@@ -2,6 +2,10 @@
 
 **Version 1.0** · A reusable agentic software engineering framework.
 
+> 🟢 **New to all this / not a developer?** Follow the
+> **[Beginner's Installation Guide (INSTALL.md)](INSTALL.md)** — a no-experience-
+> needed, copy-paste walkthrough for macOS and Windows.
+
 AEOS is not an application. It is a template repository that standardizes how
 software is engineered from **idea → production** using AI agents, with human
 approval gates between major phases. AI generates engineering artifacts
@@ -47,32 +51,43 @@ AEOS is an **overlay**: it lays its homes (`aeos/`, `.claude/commands/aeos/`,
 `docs/aeos/`, `.ai/`, and a `CLAUDE.md` block) on top of a project — new or
 existing — without clobbering anything you already have.
 
+Install it with one command, from **inside your project** (needs
+[Node.js](https://nodejs.org) ≥ 16 — works on macOS, Linux, and Windows
+PowerShell/CMD):
+
 ```bash
-# 1. Clone the template anywhere (this is the AEOS source, not your project).
-git clone git@github.com:shariya-dev/agentic-workflow.git ~/aeos-template
-
-# 2. From INSIDE your project, run the installer.
 cd /path/to/your/project
-~/aeos-template/bin/aeos-install.sh            # add --dry-run to preview first
+npx @aeos/cli init                 # add --dry-run to preview first
 ```
-
-The installer is **safe and idempotent**: it only adds files that are missing,
-never overwrites your existing files, and a second run is a no-op. See
-[Installing into an existing project](docs/user-manual.md#1-install) for the
-non-destructive guarantees, backups (`*.aeos-bak`), `--dry-run`, and
-`--uninstall`.
 
 Then finish setup:
 
-1. Install the OpenSpec CLI and run `openspec init` (the installer tells you
-   whether it created `openspec/` or left your existing one in place).
-2. Pick a framework adapter in `aeos/adapters/frameworks/` (Laravel is first).
-3. Open the project in Claude Code and run `/aeos:discover` to capture the idea.
-4. Follow the lifecycle: `/aeos:propose → /aeos:design → /aeos:blueprint →
+```bash
+npm install -g @fission-ai/openspec
+openspec init --tools claude --force
+```
+
+The installer is **safe and idempotent**: it only adds files that are missing,
+never overwrites your existing files, and a second run is a no-op. It backs up
+`CLAUDE.md` (`*.aeos-bak`) before touching it, and supports `--dry-run` and
+`uninstall`. See [Installing into an existing project](docs/user-manual.md#1-install)
+for the full guarantees.
+
+> **No Node, or prefer git?** A clone-and-run installer is also available:
+> `git clone https://github.com/shariya-dev/agentic-workflow.git ~/aeos-template`
+> then, from your project, `~/aeos-template/bin/aeos-install.sh`. Both installers
+> are equivalent. Not a developer? Follow the
+> **[beginner's guide (INSTALL.md)](INSTALL.md)**.
+
+Once installed:
+
+1. Pick a framework adapter in `aeos/adapters/frameworks/` (Laravel is first).
+2. Open the project in Claude Code and run `/aeos:discover` to capture the idea.
+3. Follow the lifecycle: `/aeos:propose → /aeos:design → /aeos:blueprint →
    /aeos:handover → /aeos:tasks`, approving each gate as you go.
-5. After G1 approval, hand `openspec/changes/<id>/` + `.ai/handovers/<id>/` to
+4. After G1 approval, hand `openspec/changes/<id>/` + `.ai/handovers/<id>/` to
    the orchestrator (Conductor) for parallel development.
-6. `/aeos:status` shows where every change sits in the lifecycle.
+5. `/aeos:status` shows where every change sits in the lifecycle.
 
 **New to AEOS? Read the [User Manual](docs/user-manual.md)** — a step-by-step
 walkthrough of the full lifecycle with a worked example.

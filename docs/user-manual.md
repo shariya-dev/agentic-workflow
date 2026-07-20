@@ -8,6 +8,10 @@ is the *how-to*.
 Throughout, we use a running example: a change called **`add-invoicing`** in a
 Laravel project.
 
+> 🟢 **Never used a terminal?** Start with the
+> **[Beginner's Installation Guide (INSTALL.md)](../INSTALL.md)** — a
+> step-by-step, copy-paste install for macOS and Windows — then come back here.
+
 ---
 
 ## 0. What You Need
@@ -27,21 +31,32 @@ AEOS is an **overlay**, not a project skeleton you clone into. You run its
 installer from inside a project — brand new or one with years of history — and
 it adds the AEOS homes without touching anything you already have.
 
-**Get the template (the AEOS source), separate from your project:**
-
-```bash
-git clone git@github.com:shariya-dev/agentic-workflow.git ~/aeos-template
-```
-
-**Run the installer from inside your project:**
+**Recommended — one command (needs [Node.js](https://nodejs.org) ≥ 16; works on
+macOS, Linux, and Windows PowerShell/CMD):**
 
 ```bash
 cd /path/to/your/project
-~/aeos-template/bin/aeos-install.sh --dry-run   # preview: writes nothing
+npx @aeos/cli init --dry-run    # preview: writes nothing
+npx @aeos/cli init              # apply
+```
+
+`npx` fetches and runs the installer without a permanent install. AEOS is a
+run-once *scaffolder*, not a project dependency — the files it writes are
+committed to your repo and AEOS never appears in your `package.json`.
+
+**Alternative — clone and run the shell installer** (no Node required; needs
+`sh`, so on Windows use Git Bash):
+
+```bash
+git clone https://github.com/shariya-dev/agentic-workflow.git ~/aeos-template
+cd /path/to/your/project
+~/aeos-template/bin/aeos-install.sh --dry-run   # preview
 ~/aeos-template/bin/aeos-install.sh             # apply
 ```
 
-What it lays down (creating each only if missing):
+Both installers are equivalent and share the same non-destructive behavior.
+
+What either one lays down (creating each only if missing):
 
 | Path | What |
 |------|------|
@@ -66,7 +81,8 @@ The installer is **non-destructive and idempotent** — the whole point:
 - **Your commands are untouched.** AEOS lands only in
   `.claude/commands/aeos/`; other commands in `.claude/commands/` are left alone.
 - **Your OpenSpec is respected.** If `openspec/` already exists, the installer
-  copies nothing there and just reminds you to run `openspec init`.
+  copies nothing there and just reminds you to run
+  `openspec init --tools claude --force`.
 - **A second run is a no-op.** Every file already present and identical is
   skipped; the summary shows `created: 0`.
 - **Backups.** Anything the installer would change in place is copied to
@@ -76,13 +92,13 @@ The installer is **non-destructive and idempotent** — the whole point:
 `openspec/` — your data — intact):
 
 ```bash
-~/aeos-template/bin/aeos-install.sh --uninstall   # --dry-run works here too
+npx @aeos/cli uninstall            # or: ~/aeos-template/bin/aeos-install.sh --uninstall
 ```
 
-It deletes `aeos/`, `.claude/commands/aeos/`, and `docs/aeos/`, and strips the
-AEOS block from `CLAUDE.md` (backing it up first). To remove manually instead:
-`rm -rf aeos .claude/commands/aeos docs/aeos` and delete the marked block from
-`CLAUDE.md`.
+(`--dry-run` works here too.) It deletes `aeos/`, `.claude/commands/aeos/`, and
+`docs/aeos/`, and strips the AEOS block from `CLAUDE.md` (backing it up first).
+To remove manually instead: `rm -rf aeos .claude/commands/aeos docs/aeos` and
+delete the marked block from `CLAUDE.md`.
 
 Then continue setup:
 
@@ -90,7 +106,8 @@ Then continue setup:
    whether it created `openspec/` or left yours in place):
 
    ```bash
-   openspec init
+   npm install -g @fission-ai/openspec
+   openspec init --tools claude --force
    ```
 
 3. **Activate a framework adapter.** Pick one from `aeos/adapters/frameworks/`
@@ -293,13 +310,14 @@ accurate spec of the system.
 
 ## 5. Maintaining AEOS Itself
 
-- **Upgrading a project's framework:** re-run the installer from a newer
-  template checkout — `~/aeos-template/bin/aeos-install.sh` (use `--dry-run`
-  first). It adds anything new without disturbing your work; existing files are
-  kept, and the `CLAUDE.md` block is refreshed in place (backed up first). To
-  force framework files (`aeos/`, `.claude/commands/aeos/`) to the newer
-  version, delete those two directories first, then re-run — project work never
-  lives there, so they are safe to remove and regenerate.
+- **Upgrading a project's framework:** re-run the installer at a newer version —
+  `npx @aeos/cli@latest init` (or `~/aeos-template/bin/aeos-install.sh` from a
+  fresh clone); use `--dry-run` first. It adds anything new without disturbing
+  your work; existing files are kept, and the `CLAUDE.md` block is refreshed in
+  place (backed up first). To force framework files (`aeos/`,
+  `.claude/commands/aeos/`) to the newer version, delete those two directories
+  first, then re-run — project work never lives there, so they are safe to
+  remove and regenerate.
 - **Adding a framework adapter** (.NET, NestJS, Spring Boot, Django, FastAPI):
   create `aeos/adapters/frameworks/<name>/` implementing
   `aeos/adapters/_contract.md` — README, guide-overrides (one section per
