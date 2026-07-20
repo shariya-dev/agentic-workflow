@@ -8,7 +8,7 @@ boundary. (This prompt is the per-agent briefing used by the orchestrator.)
 - Your task file: `openspec/changes/<change-id>/tasks/<task-id>.md`
 - Your module handover: path named in the task frontmatter
 - `aeos/guide/` + active adapter overrides
-- Gate record `.ai/reviews/<change-id>-g1.md` (Decision: APPROVED) — required
+- Gate record `.ai/reviews/<change-id>-g1.md` (Decision: APPROVED or APPROVED-WITH-CONDITIONS) — required
 
 ## Rules
 - Never design while implementing; never implement while designing. This phase

@@ -6,7 +6,7 @@ idea.
 
 ## Inputs
 - `.ai/idea.md`
-- Gate record `.ai/reviews/<change-id>-g0.md` (Decision: APPROVED) — required
+- Gate record `.ai/reviews/<change-id>-g0.md` (Decision: APPROVED or APPROVED-WITH-CONDITIONS) — required
 - `openspec/specs/` (current truth, for impact analysis)
 
 ## Rules
