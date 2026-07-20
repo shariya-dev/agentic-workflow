@@ -21,18 +21,73 @@ Laravel project.
 
 ---
 
-## 1. Start a New Project
+## 1. Install
 
-1. **Clone the template** into your new project repo:
+AEOS is an **overlay**, not a project skeleton you clone into. You run its
+installer from inside a project — brand new or one with years of history — and
+it adds the AEOS homes without touching anything you already have.
 
-   ```bash
-   git clone git@github.com:shariya-dev/agentic-workflow.git my-project
-   cd my-project
-   rm -rf .git && git init -b main
-   git add -A && git commit -m "chore: bootstrap from AEOS template"
-   ```
+**Get the template (the AEOS source), separate from your project:**
 
-2. **Initialize OpenSpec** (refreshes CLI tool files; AEOS directories already exist):
+```bash
+git clone git@github.com:shariya-dev/agentic-workflow.git ~/aeos-template
+```
+
+**Run the installer from inside your project:**
+
+```bash
+cd /path/to/your/project
+~/aeos-template/bin/aeos-install.sh --dry-run   # preview: writes nothing
+~/aeos-template/bin/aeos-install.sh             # apply
+```
+
+What it lays down (creating each only if missing):
+
+| Path | What |
+|------|------|
+| `aeos/` | The framework — prompts, templates, workflows, guide, adapters |
+| `.claude/commands/aeos/` | The `/aeos:*` slash commands |
+| `docs/aeos/` | AEOS's own docs (kept out of your `docs/` root) |
+| `.ai/` | Empty workspace scaffold (blueprint, handovers, reports, reviews) |
+| `openspec/` | Created **only if you don't already have one** |
+| `CLAUDE.md` | AEOS block, between `<!-- AEOS:start -->` / `<!-- AEOS:end -->` markers |
+
+### Installing into an existing project
+
+The installer is **non-destructive and idempotent** — the whole point:
+
+- **It never overwrites your files.** If a file already exists it is left
+  exactly as-is (reported as *unchanged* or *kept*). Only missing files are
+  added, so it can't nest `aeos/` inside `aeos/` or clobber a command you wrote.
+- **Your `CLAUDE.md` is preserved.** If you have one, AEOS is appended between
+  clear markers; your content stays on top. Re-running only refreshes the text
+  between the markers. The file is backed up to `CLAUDE.md.aeos-bak` before any
+  in-place edit.
+- **Your commands are untouched.** AEOS lands only in
+  `.claude/commands/aeos/`; other commands in `.claude/commands/` are left alone.
+- **Your OpenSpec is respected.** If `openspec/` already exists, the installer
+  copies nothing there and just reminds you to run `openspec init`.
+- **A second run is a no-op.** Every file already present and identical is
+  skipped; the summary shows `created: 0`.
+- **Backups.** Anything the installer would change in place is copied to
+  `<file>.aeos-bak` first. In practice only `CLAUDE.md` is ever edited in place.
+
+**Uninstall.** Remove AEOS cleanly (leaves your `.ai/` workspace and
+`openspec/` — your data — intact):
+
+```bash
+~/aeos-template/bin/aeos-install.sh --uninstall   # --dry-run works here too
+```
+
+It deletes `aeos/`, `.claude/commands/aeos/`, and `docs/aeos/`, and strips the
+AEOS block from `CLAUDE.md` (backing it up first). To remove manually instead:
+`rm -rf aeos .claude/commands/aeos docs/aeos` and delete the marked block from
+`CLAUDE.md`.
+
+Then continue setup:
+
+1. **Initialize OpenSpec** (refreshes CLI tool files; the installer tells you
+   whether it created `openspec/` or left yours in place):
 
    ```bash
    openspec init
@@ -238,9 +293,13 @@ accurate spec of the system.
 
 ## 5. Maintaining AEOS Itself
 
-- **Upgrading a project's framework:** copy the newer `aeos/` directory (and
-  `.claude/commands/aeos/`) from the template repo over your project's copy.
-  They are safe to replace wholesale because project work never lives there.
+- **Upgrading a project's framework:** re-run the installer from a newer
+  template checkout — `~/aeos-template/bin/aeos-install.sh` (use `--dry-run`
+  first). It adds anything new without disturbing your work; existing files are
+  kept, and the `CLAUDE.md` block is refreshed in place (backed up first). To
+  force framework files (`aeos/`, `.claude/commands/aeos/`) to the newer
+  version, delete those two directories first, then re-run — project work never
+  lives there, so they are safe to remove and regenerate.
 - **Adding a framework adapter** (.NET, NestJS, Spring Boot, Django, FastAPI):
   create `aeos/adapters/frameworks/<name>/` implementing
   `aeos/adapters/_contract.md` — README, guide-overrides (one section per

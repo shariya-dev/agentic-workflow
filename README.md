@@ -41,18 +41,38 @@ Stage 2 — Development
 Gates `G0/G1/G2` are human decisions recorded as files in `.ai/reviews/`.
 Nothing crosses a gate without its record.
 
-## Quickstart
+## Install
 
-1. Clone this template into a new project repository.
-2. Install the OpenSpec CLI and run `openspec init` (refreshes tool files;
-   AEOS directories are already in place).
-3. Pick a framework adapter in `aeos/adapters/frameworks/` (Laravel is first).
-4. Open the project in Claude Code and run `/aeos:discover` to capture the idea.
-5. Follow the lifecycle: `/aeos:propose → /aeos:design → /aeos:blueprint →
+AEOS is an **overlay**: it lays its homes (`aeos/`, `.claude/commands/aeos/`,
+`docs/aeos/`, `.ai/`, and a `CLAUDE.md` block) on top of a project — new or
+existing — without clobbering anything you already have.
+
+```bash
+# 1. Clone the template anywhere (this is the AEOS source, not your project).
+git clone git@github.com:shariya-dev/agentic-workflow.git ~/aeos-template
+
+# 2. From INSIDE your project, run the installer.
+cd /path/to/your/project
+~/aeos-template/bin/aeos-install.sh            # add --dry-run to preview first
+```
+
+The installer is **safe and idempotent**: it only adds files that are missing,
+never overwrites your existing files, and a second run is a no-op. See
+[Installing into an existing project](docs/user-manual.md#1-install) for the
+non-destructive guarantees, backups (`*.aeos-bak`), `--dry-run`, and
+`--uninstall`.
+
+Then finish setup:
+
+1. Install the OpenSpec CLI and run `openspec init` (the installer tells you
+   whether it created `openspec/` or left your existing one in place).
+2. Pick a framework adapter in `aeos/adapters/frameworks/` (Laravel is first).
+3. Open the project in Claude Code and run `/aeos:discover` to capture the idea.
+4. Follow the lifecycle: `/aeos:propose → /aeos:design → /aeos:blueprint →
    /aeos:handover → /aeos:tasks`, approving each gate as you go.
-6. After G1 approval, hand `openspec/changes/<id>/` + `.ai/handovers/<id>/` to
+5. After G1 approval, hand `openspec/changes/<id>/` + `.ai/handovers/<id>/` to
    the orchestrator (Conductor) for parallel development.
-7. `/aeos:status` shows where every change sits in the lifecycle.
+6. `/aeos:status` shows where every change sits in the lifecycle.
 
 **New to AEOS? Read the [User Manual](docs/user-manual.md)** — a step-by-step
 walkthrough of the full lifecycle with a worked example.
