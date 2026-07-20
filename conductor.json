@@ -1,0 +1,6 @@
+{
+  "scripts": {
+    "setup": "echo 'AEOS: adapter setup placeholder — install deps for the active framework adapter here'",
+    "run": "echo 'AEOS: run placeholder — start the app or test watcher here'"
+  }
+}
