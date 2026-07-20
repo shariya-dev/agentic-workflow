@@ -54,9 +54,13 @@ Nothing crosses a gate without its record.
    the orchestrator (Conductor) for parallel development.
 7. `/aeos:status` shows where every change sits in the lifecycle.
 
+**New to AEOS? Read the [User Manual](docs/user-manual.md)** — a step-by-step
+walkthrough of the full lifecycle with a worked example.
+
 ## Repository Map
 
-- `docs/` — architecture, workflow, OpenSpec mapping, Conductor mapping
+- `docs/` — architecture, workflow, OpenSpec mapping, Conductor mapping,
+  **[user manual](docs/user-manual.md)**
 - `aeos/prompts/` — one prompt per phase (`00-discovery` … `80-testing`)
 - `aeos/templates/` — artifact contracts (handover, task, gate record, reports)
 - `aeos/workflows/` — phase registry and gate definitions
