@@ -70,8 +70,9 @@ openspec init --tools claude --force
 The installer is **safe and idempotent**: it only adds files that are missing,
 never overwrites your existing files, and a second run is a no-op. It backs up
 `CLAUDE.md` (`*.aeos-bak`) before touching it, and supports `--dry-run` and
-`uninstall`. See [Installing into an existing project](docs/user-manual.md#1-install)
-for the full guarantees.
+removal (`npx @aeos/cli remove`). See
+[Installing into an existing project](docs/user-manual.md#1-install) for the
+full guarantees.
 
 > **No Node, or prefer git?** A clone-and-run installer is also available:
 > `git clone https://github.com/shariya-dev/agentic-workflow.git ~/aeos-template`

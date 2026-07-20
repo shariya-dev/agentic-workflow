@@ -35,7 +35,7 @@ UNINSTALL=0
 for arg in "$@"; do
   case "$arg" in
     --dry-run)   DRY_RUN=1 ;;
-    --uninstall) UNINSTALL=1 ;;
+    --uninstall|--remove) UNINSTALL=1 ;;
     -h|--help)
       cat <<EOF
 aeos-install.sh — overlay AEOS onto the current project (safe & idempotent)
@@ -43,10 +43,10 @@ aeos-install.sh — overlay AEOS onto the current project (safe & idempotent)
   cd into your project first, then run this script from the template checkout.
 
 Options:
-  --dry-run     Print what would change; write nothing.
-  --uninstall   Remove AEOS framework files and the CLAUDE.md marker block.
-                Leaves your .ai/ workspace and openspec/ untouched.
-  -h, --help    Show this help.
+  --dry-run           Print what would change; write nothing.
+  --remove            Remove AEOS framework files and the CLAUDE.md marker block.
+  --uninstall         Same as --remove. Leaves .ai/ and openspec/ untouched.
+  -h, --help          Show this help.
 
 The installer never overwrites your files. It only adds what is missing and,
 for CLAUDE.md, edits between <!-- AEOS:start --> / <!-- AEOS:end --> markers,

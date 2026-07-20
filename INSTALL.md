@@ -24,8 +24,8 @@ Two safety tools you'll use in this guide:
 
 - **`--dry-run`** — a "preview" mode. It shows you exactly what *would* happen
   and **writes nothing at all.** Always safe to run.
-- **`uninstall`** — a command that cleanly removes AEOS again if you change your
-  mind. It leaves your own work untouched.
+- **`remove`** — a command that cleanly removes AEOS again if you change your
+  mind. It leaves your own work untouched. (`uninstall` does the same thing.)
 
 You will preview first (Part 3), then install for real (Part 4). If anything ever
 looks wrong, the **Appendix** at the end shows how to undo everything.
@@ -722,18 +722,18 @@ All of these are safe to run from inside your project folder:
   npx @aeos/cli init
   ```
 
-- **Preview an uninstall (no changes):**
+- **Preview a removal (no changes):**
 
   ```
-  npx @aeos/cli uninstall --dry-run
+  npx @aeos/cli remove --dry-run
   ```
 
-- **Uninstall for real** (removes the AEOS files and the AEOS section of
+- **Remove AEOS for real** (deletes the AEOS files and the AEOS section of
   `CLAUDE.md`; **leaves your own work — the `.ai/` and `openspec/` folders —
-  untouched**):
+  untouched**). `remove` and `uninstall` are the same command:
 
   ```
-  npx @aeos/cli uninstall
+  npx @aeos/cli remove
   ```
 
 - **See all options:**
@@ -784,5 +784,5 @@ Then, from **inside your project folder** (Part 2), run the shell installer
 ~/aeos-template/bin/aeos-install.sh
 ```
 
-It behaves identically to `npx @aeos/cli init`. For uninstall, use
-`~/aeos-template/bin/aeos-install.sh --uninstall`.
+It behaves identically to `npx @aeos/cli init`. To remove AEOS, use
+`~/aeos-template/bin/aeos-install.sh --remove`.

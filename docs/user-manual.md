@@ -88,11 +88,11 @@ The installer is **non-destructive and idempotent** — the whole point:
 - **Backups.** Anything the installer would change in place is copied to
   `<file>.aeos-bak` first. In practice only `CLAUDE.md` is ever edited in place.
 
-**Uninstall.** Remove AEOS cleanly (leaves your `.ai/` workspace and
-`openspec/` — your data — intact):
+**Remove.** Take AEOS out cleanly (leaves your `.ai/` workspace and
+`openspec/` — your data — intact). `remove` and `uninstall` are the same command:
 
 ```bash
-npx @aeos/cli uninstall            # or: ~/aeos-template/bin/aeos-install.sh --uninstall
+npx @aeos/cli remove               # or: ~/aeos-template/bin/aeos-install.sh --remove
 ```
 
 (`--dry-run` works here too.) It deletes `aeos/`, `.claude/commands/aeos/`, and

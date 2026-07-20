@@ -125,11 +125,12 @@ Usage:
   npx @aeos/cli <command> [--dry-run]
 
 Commands:
-  init         Overlay AEOS onto the current directory (add missing files only).
-  uninstall    Remove AEOS framework files and the CLAUDE.md marker block.
-               Leaves your .ai/ workspace and openspec/ untouched.
-  help         Show this help.
-  version      Print the AEOS version.
+  init                Overlay AEOS onto the current directory (add missing files
+                      only).
+  remove, uninstall   Remove AEOS framework files and the CLAUDE.md marker block.
+                      Leaves your .ai/ workspace and openspec/ untouched.
+  help                Show this help.
+  version             Print the AEOS version.
 
 Options:
   --dry-run    Print what would change; write nothing.
