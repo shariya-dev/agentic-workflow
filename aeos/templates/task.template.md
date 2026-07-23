@@ -1,6 +1,6 @@
 ---
 artifact: task
-phase: 50-tasks
+phase: 45-tasks
 owner: ai
 inputs: [".ai/handovers/<change-id>/<module>.handover.md"]
 outputs: ["openspec/changes/<change-id>/tasks/<task-id>.md"]

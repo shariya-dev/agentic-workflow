@@ -20,10 +20,16 @@ An artifact is valid only when its validation criteria hold.
 ## Artifact Dependency Graph
 
 ```
-idea → proposal → design → blueprint → handovers → tasks → [G1] → code
-                     ↘ spec deltas ─────────────────────────↗ (agent context)
-code → review + test + integration + security reports → [G2] → deploy → archive
+Stage 1 (design, no code):
+  idea → PRD → domain → architecture(+deltas) → ADRs → engineering guide → [G1]
+Stage 2 (foundation):
+  golden module → frozen contracts → handovers → blueprint + tasks → [G2]
+Stage 3 (parallel build):
+  code → test + review + integration + security + performance → [G3] → docs → deploy → archive
 ```
+
+Every Stage-3 agent receives only six things: Golden Module, Engineering Guide,
+Architecture, Contracts, its own Handover, its own Tasks.
 
 Per-phase owner/inputs/outputs/validation: `aeos/workflows/phases.md`.
 Gate definitions: `aeos/workflows/gates.md`.

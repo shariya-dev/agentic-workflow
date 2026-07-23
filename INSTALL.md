@@ -367,10 +367,11 @@ exist in your project:
 ls .claude/commands/aeos/ aeos/ docs/aeos/
 ```
 
-You should see command files like `discover.md`, `propose.md`, `design.md`,
-`blueprint.md`, `handover.md`, `tasks.md`, `review.md`, `report.md`, and
-`status.md`, plus AEOS folders such as `prompts`, `templates`, `workflows`, and
-`guide`. If you see those, **AEOS is installed correctly.** 🎉
+You should see command files like `discover.md`, `requirements.md`, `domain.md`,
+`architecture.md`, `adr.md`, `guardrails.md`, `golden.md`, `contracts.md`,
+`handover.md`, `tasks.md`, `implement.md`, `review.md`, `report.md`, `docs.md`,
+and `status.md`, plus AEOS folders such as `prompts`, `templates`, `workflows`,
+and `guide`. If you see those, **AEOS is installed correctly.** 🎉
 
 ---
 
@@ -464,8 +465,8 @@ after a `/` command is treated as plain text, not opened. Instead, do this:
 
 > **Good to know:** discovery deliberately stays in the "problem" space. Even if
 > your SRS or tender already describes *solutions* or *technology*, discovery
-> ignores those on purpose — they belong to the later `/aeos:propose` and
-> `/aeos:design` phases, so nothing is lost.
+> ignores those on purpose — they belong to the later `/aeos:requirements` and
+> `/aeos:architecture` phases, so nothing is lost.
 
 ---
 
@@ -487,174 +488,231 @@ Nothing past this point runs until that file exists and says `APPROVED` (or
 
 ---
 
-### 8.3 · `/aeos:propose` — write the proposal (the *what* and *why*)
+The work runs in **three stages** with **four gates**. Stage 1 is all planning
+(no code). Stage 2 builds one perfect "Golden Module" and freezes the shared
+rules. Stage 3 builds everything else in parallel.
 
-**Use it when:** G0 is approved and you want the formal proposal. It reads your
-idea and turns it into a proper change proposal. (It will **stop** if the G0 file
-is missing — that's the safety net working.)
+## Stage 1 — Design (planning, no code)
 
-**Example:**
+### 8.3 · `/aeos:requirements` — write the requirements (PRD)
+
+**Use it when:** G0 is approved and you want the full requirements. It turns your
+idea into complete, unambiguous requirements. (It **stops** if the G0 file is
+missing — the safety net working.)
 
 ```
-/aeos:propose add-invoicing
+/aeos:requirements add-invoicing
 ```
 
-**You get:** `openspec/changes/add-invoicing/proposal.md`. Read and approve it in
-the conversation before moving on.
+**You get:** `openspec/changes/add-invoicing/proposal.md` — a PRD with functional
+and non-functional requirements, user stories, and acceptance criteria. Read and
+approve it.
 
 ---
 
-### 8.4 · `/aeos:design` — decide *how* it will be built
+### 8.4 · `/aeos:domain` — model the business
 
-**Use it when:** the proposal is approved and you want the technical design and
-the specification changes.
-
-**Example:**
+**Use it when:** the requirements are approved and you want the domain modeled
+before any technology is chosen.
 
 ```
-/aeos:design add-invoicing
+/aeos:domain add-invoicing
 ```
 
-**You get:** `design.md` plus "spec deltas" (the exact changes to the spec) under
-`openspec/changes/add-invoicing/specs/`. Approve the design, then continue.
+**You get:** `.ai/domain/add-invoicing/domain-model.md` — bounded contexts,
+entities, rules, and the key events. Approve it.
 
 ---
 
-### 8.5 · `/aeos:blueprint` — split the work into modules and "waves"
+### 8.5 · `/aeos:architecture` — decide *how*, and freeze the tech
 
-**Use it when:** the design is approved and you want it broken into buildable
-pieces (modules) grouped into waves (what can be built first, second, …).
-
-**Example:**
+**Use it when:** the domain model is approved and you want the technical design.
 
 ```
-/aeos:blueprint add-invoicing
+/aeos:architecture add-invoicing
 ```
 
-**You get:** `.ai/blueprint/add-invoicing/blueprint.md` — each module with a
-name, purpose, boundary, dependencies, and wave number. Approve it, then
-continue.
+**You get:** `design.md` + "spec deltas" under
+`openspec/changes/add-invoicing/specs/`, including the **frozen technology
+stack**. Approve it.
 
 ---
 
-### 8.6 · `/aeos:handover` — write a full build-brief per module
+### 8.6 · `/aeos:adr` — record the big decisions
 
-**Use it when:** the blueprint is approved. This writes one detailed "handover"
-document per module — everything a builder needs so they never have to guess.
+**Use it when:** the architecture is approved. Captures the significant, hard-to-
+reverse decisions and why alternatives lost.
 
-**Example:**
+```
+/aeos:adr add-invoicing
+```
+
+**You get:** `.ai/adr/add-invoicing/ADR-001-*.md`, one per decision.
+
+---
+
+### 8.7 · `/aeos:guardrails` — pin the standards
+
+**Use it when:** the architecture is approved. Pins the coding/naming/testing
+standards every module must follow (referencing the built-in guide).
+
+```
+/aeos:guardrails add-invoicing
+```
+
+**You get:** `.ai/engineering-guide/add-invoicing.md`.
+
+---
+
+### 8.8 · Gate **G1** — "Design frozen?" *(your decision, not a command)*
+
+**Use it when:** the whole design set (requirements + domain + architecture +
+ADRs + guardrails) is ready and an architect has reviewed it. **No code exists
+yet — this is the last cheap moment to change direction.**
+
+**How:** record `.ai/reviews/add-invoicing-g1.md`:
+
+```
+Decision: APPROVED
+```
+
+---
+
+## Stage 2 — Foundation (the first code + frozen rules)
+
+### 8.9 · `/aeos:golden` — build the reference module
+
+**Use it when:** G1 is approved. Builds **one complete module** perfectly — the
+standard every other module copies. (Stops without G1.)
+
+```
+/aeos:golden add-invoicing
+```
+
+**You get:** one real, tested module + `.ai/golden/add-invoicing/golden-module.md`.
+
+---
+
+### 8.10 · `/aeos:contracts` — freeze the shared interfaces
+
+**Use it when:** the Golden Module exists. Freezes the APIs/events/data every
+module shares, so parallel builders can't collide.
+
+```
+/aeos:contracts add-invoicing
+```
+
+**You get:** `.ai/contracts/add-invoicing/contracts.md`, marked FROZEN. After
+this, nobody changes a contract on their own.
+
+---
+
+### 8.11 · `/aeos:handover` — write a full build-brief per module
+
+**Use it when:** contracts are frozen. Writes one detailed "handover" per module
+so a builder never has to guess.
 
 ```
 /aeos:handover add-invoicing
 ```
 
-**You get:** one `.ai/handovers/add-invoicing/<module>.handover.md` per module,
-each with all 11 sections filled in.
+**You get:** one `.ai/handovers/add-invoicing/<module>.handover.md` per module.
 
 ---
 
-### 8.7 · `/aeos:tasks` — slice handovers into small, assignable tasks
+### 8.12 · `/aeos:tasks` — plan the waves and slice the tasks
 
-**Use it when:** the handovers exist and you want the actual to-do list — small
-tasks that can be built one at a time (or in parallel).
-
-**Example:**
+**Use it when:** the handovers exist. Produces the wave plan plus the small
+buildable tasks.
 
 ```
 /aeos:tasks add-invoicing
 ```
 
-**You get:** `openspec/changes/add-invoicing/tasks.md` (an index) plus one file
-per task under `tasks/`, each with a verification command.
+**You get:** `.ai/blueprint/add-invoicing/blueprint.md` (waves) + one file per
+task under `openspec/changes/add-invoicing/tasks/`, each with a verification
+command.
 
 ---
 
-### 8.8 · Gate **G1** — "Build it?" *(your decision, not a command)*
+### 8.13 · Gate **G2** — "Build it all in parallel?" *(your decision)*
 
-**Use it when:** the whole Stage-1 set (proposal + design + blueprint + handovers
-+ tasks) is ready and a tech lead has reviewed it. This is the **most important**
-gate — the last cheap moment to change scope.
+**Use it when:** the golden module, contracts, handovers, and tasks are ready and
+a tech lead has reviewed them. This is the **most important** gate — the moment
+before the design is copied across every module.
 
-**How:** record the decision in `.ai/reviews/add-invoicing-g1.md`:
+**How:** record `.ai/reviews/add-invoicing-g2.md`:
 
 ```
 Decision: APPROVED
 ```
 
-**Nothing in Stage 2 (the actual building) runs without this file.**
+**Nothing parallel runs without this file.**
 
 ---
 
-### 8.9 · Building the tasks *(handled by the orchestrator, after G1)*
+## Stage 3 — Parallel build & release
 
-**Use it when:** G1 is approved. The tasks are handed to the orchestrator
-(Conductor), which has AI agents build them wave by wave. See
-[docs/user-manual.md](docs/user-manual.md) §3 for this hand-off. When branches
-come back, you review them:
+### 8.14 · Building the tasks *(orchestrator, after G2)*
+
+**Use it when:** G2 is approved. Tasks are handed to the orchestrator
+(Conductor), which runs AI agents wave by wave — each agent seeing only the
+Golden Module, guide, architecture, contracts, its handover, and its tasks. In a
+single session you can also run `/aeos:implement add-invoicing T-001`. When
+branches come back, you review them.
 
 ---
 
-### 8.10 · `/aeos:review` — check the finished work
+### 8.15 · `/aeos:review` — check the finished work
 
-**Use it when:** code has been built and you need it checked. There are five
-review types — run the one you need: `code-review`, `security`, `performance`,
-`integration`, `release-readiness`. (Requires G1 to be approved; it will stop
+**Use it when:** code is built. Five review types: `code-review`, `security`,
+`performance`, `integration`, `release-readiness`. (Requires G2; stops
 otherwise.)
-
-**Examples — run whichever applies** (one at a time):
 
 ```
 /aeos:review add-invoicing code-review
-```
-
-```
-/aeos:review add-invoicing security
-```
-
-```
 /aeos:review add-invoicing integration
-```
-
-```
+/aeos:review add-invoicing security
 /aeos:review add-invoicing performance
-```
-
-```
 /aeos:review add-invoicing release-readiness
 ```
 
-**You get:** a report file per review under `.ai/reports/add-invoicing/`. Every
-verdict must cite evidence.
+**You get:** a report per review under `.ai/reports/add-invoicing/`. Every
+verdict cites evidence.
 
 ---
 
-### 8.11 · `/aeos:report` — measure test coverage
-
-**Use it when:** the work is built and you want the test-coverage report (this
-feeds the `release-readiness` review above).
-
-**Example:**
+### 8.16 · `/aeos:report` — measure test coverage
 
 ```
 /aeos:report add-invoicing
 ```
 
-**You get:** `.ai/reports/add-invoicing/report-test-coverage.md` — real numbers,
-or explicitly named gaps.
+**You get:** `.ai/reports/add-invoicing/report-test-coverage.md`.
 
 ---
 
-### 8.12 · Gate **G2** — "Ship it?" *(your decision, not a command)*
+### 8.17 · Gate **G3** — "Ship it?" *(your decision, not a command)*
 
-**Use it when:** all six reports exist and the release owner has reviewed them.
-Record the decision in `.ai/reviews/add-invoicing-g2.md`:
+**Use it when:** all reports exist and the release owner has reviewed them.
+Record `.ai/reviews/add-invoicing-g3.md`:
 
 ```
 Decision: APPROVED
 ```
 
-Then deploy however your project deploys, and finally close the loop in your
-**Terminal / Git Bash**:
+---
+
+### 8.18 · `/aeos:docs`, deploy, and archive
+
+**Use it when:** G3 is approved. Generate the documentation handover, deploy, and
+close the loop:
+
+```
+/aeos:docs add-invoicing
+```
+
+Then deploy however your project deploys, and in your **Terminal / Git Bash**:
 
 ```
 openspec archive add-invoicing
@@ -662,13 +720,10 @@ openspec archive add-invoicing
 
 ---
 
-### 8.13 · `/aeos:status` — see where you are (use anytime)
+### `/aeos:status` — see where you are (use anytime)
 
-**Use it when:** at *any* point you want a map of every change, the furthest
-phase it reached, the last gate it passed, and the exact next command to run.
-It's the safest thing to run if you're ever unsure what comes next.
-
-**Example:**
+At *any* point, this maps every change, the furthest phase it reached, the last
+gate passed, and the exact next command.
 
 ```
 /aeos:status
@@ -679,14 +734,15 @@ It's the safest thing to run if you're ever unsure what comes next.
 ### The whole command order at a glance
 
 ```
-/aeos:discover  →  [Gate G0]  →  /aeos:propose  →  /aeos:design
-   →  /aeos:blueprint  →  /aeos:handover  →  /aeos:tasks  →  [Gate G1]
-   →  (orchestrator builds)  →  /aeos:review …  +  /aeos:report
-   →  [Gate G2]  →  deploy  →  openspec archive
+Stage 1  /aeos:discover → [G0] → /aeos:requirements → /aeos:domain
+         → /aeos:architecture → /aeos:adr → /aeos:guardrails → [G1]
+Stage 2  → /aeos:golden → /aeos:contracts → /aeos:handover → /aeos:tasks → [G2]
+Stage 3  → (orchestrator builds) → /aeos:review … + /aeos:report → [G3]
+         → /aeos:docs → deploy → openspec archive
 ```
 
-`/aeos:status` can be run at any time. For the full walkthrough with more detail,
-see [docs/user-manual.md](docs/user-manual.md).
+`/aeos:status` can be run at any time. For the full walkthrough with when/what/
+why/how for every phase, see the **[User Guide](docs/user-guide.md)**.
 
 ---
 

@@ -10,7 +10,7 @@ validation: Decision is one of APPROVED / APPROVED-WITH-CONDITIONS / REJECTED; a
 
 # Gate Record: <change-id> — G<n>
 
-- **Gate:** G<n> (<idea | engineering | release>)
+- **Gate:** G<n> (<idea G0 | design G1 | foundation G2 | release G3>)
 - **Change:** `<change-id>`
 - **Approver:** <name / role>
 - **Date:** <YYYY-MM-DD>

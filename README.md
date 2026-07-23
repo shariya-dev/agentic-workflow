@@ -1,6 +1,6 @@
 # AEOS — AI Engineering Operating System
 
-**Version 1.0** · A reusable agentic software engineering framework.
+**Version 2.0** · A reusable agentic software engineering framework.
 
 > 🟢 **New to all this / not a developer?** Follow the
 > **[Beginner's Installation Guide (INSTALL.md)](INSTALL.md)** — a no-experience-
@@ -33,17 +33,25 @@ identical regardless of stack; stack specifics live only in adapters.
 
 ## Lifecycle at a Glance
 
-```
-Stage 1 — Engineering
-  idea → [G0] → proposal → design → blueprint → handovers → tasks → [G1]
+Design first, prove the pattern once with a **Golden Module**, freeze the
+**Contracts**, then build every module in parallel against them.
 
-Stage 2 — Development
-  [G1] → orchestrator spawns parallel agents in waves → review → testing
-       → integration → security → [G2] → deployment → openspec archive
+```
+Stage 1 — Design (no code)
+  idea → [G0] → PRD → domain → architecture → ADRs → engineering guide → [G1]
+
+Stage 2 — Foundation (first code)
+  [G1] → golden module → freeze contracts → handovers → blueprint + tasks → [G2]
+
+Stage 3 — Parallel Build & Release
+  [G2] → parallel agents in waves → testing → review → integration → security
+       → performance → [G3] → docs → deployment → openspec archive
 ```
 
-Gates `G0/G1/G2` are human decisions recorded as files in `.ai/reviews/`.
-Nothing crosses a gate without its record.
+Gates `G0/G1/G2/G3` are human decisions recorded as files in `.ai/reviews/`.
+Nothing crosses a gate without its record. Every Stage-3 agent receives only six
+things: the Golden Module, Engineering Guide, Architecture, Contracts, its own
+Handover, and its own Tasks.
 
 ## Install
 
@@ -71,8 +79,7 @@ The installer is **safe and idempotent**: it only adds files that are missing,
 never overwrites your existing files, and a second run is a no-op. It backs up
 `CLAUDE.md` (`*.aeos-bak`) before touching it, and supports `--dry-run` and
 removal (`npx @aeos/cli remove`). See
-[Installing into an existing project](docs/user-manual.md#1-install) for the
-full guarantees.
+[INSTALL.md](INSTALL.md) for the full guarantees and a beginner walkthrough.
 
 > **No Node, or prefer git?** A clone-and-run installer is also available:
 > `git clone https://github.com/shariya-dev/agentic-workflow.git ~/aeos-template`
@@ -84,24 +91,29 @@ Once installed:
 
 1. Pick a framework adapter in `aeos/adapters/frameworks/` (Laravel is first).
 2. Open the project in Claude Code and run `/aeos:discover` to capture the idea.
-3. Follow the lifecycle: `/aeos:propose → /aeos:design → /aeos:blueprint →
-   /aeos:handover → /aeos:tasks`, approving each gate as you go.
-4. After G1 approval, hand `openspec/changes/<id>/` + `.ai/handovers/<id>/` to
-   the orchestrator (Conductor) for parallel development.
+3. Follow the lifecycle: `/aeos:requirements → /aeos:domain → /aeos:architecture
+   → /aeos:adr → /aeos:guardrails` (Stage 1), then `/aeos:golden →
+   /aeos:contracts → /aeos:handover → /aeos:tasks` (Stage 2), approving each
+   gate as you go.
+4. After G2 approval, hand `openspec/changes/<id>/` + `.ai/handovers/<id>/` to
+   the orchestrator (Conductor) for parallel development (`/aeos:implement`).
 5. `/aeos:status` shows where every change sits in the lifecycle.
 
-**New to AEOS? Read the [User Manual](docs/user-manual.md)** — a step-by-step
-walkthrough of the full lifecycle with a worked example.
+**New to AEOS?** Read **[getting-started.md](docs/getting-started.md)** (the
+ten-minute version) then the **[User Guide](docs/user-guide.md)** — every phase
+with when/what/why/how, examples, and a workflow diagram.
 
 ## Repository Map
 
 - `docs/` — architecture, workflow, OpenSpec mapping, Conductor mapping,
-  **[user manual](docs/user-manual.md)**
-- `aeos/prompts/` — one prompt per phase (`00-discovery` … `80-testing`)
-- `aeos/templates/` — artifact contracts (handover, task, gate record, reports)
+  **[getting started](docs/getting-started.md)**, **[user guide](docs/user-guide.md)**
+- `aeos/prompts/` — one prompt per phase (`00-discovery` … `65-documentation`)
+- `aeos/templates/` — artifact contracts (PRD, domain, ADR, engineering guide,
+  golden module, contracts, blueprint, handover, task, gate record, reports)
 - `aeos/workflows/` — phase registry and gate definitions
 - `aeos/guide/` — engineering guide skeleton (standards, DDD, SOLID, testing…)
 - `aeos/adapters/` — framework + orchestrator adapters
 - `openspec/` — OpenSpec CLI territory
-- `.ai/` — per-project workspace
+- `.ai/` — per-project workspace (idea, domain, adr, engineering-guide, golden,
+  contracts, handovers, blueprint, reviews, reports)
 - `.claude/commands/aeos/` — executable phase commands
