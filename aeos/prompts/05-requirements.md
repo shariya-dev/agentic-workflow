@@ -19,6 +19,11 @@ change proposal.
 - Remove ambiguity, surface missing requirements, name assumptions, separate
   functional from non-functional requirements, discover edge cases.
 - Produce user stories and testable acceptance criteria.
+- **Classify the change** (`new-system` / `new-module` / `module-change` /
+  `patch`) and state it in the PRD; it must match the `Change-Type` in the G0
+  record and selects the phase path (`aeos/workflows/change-types.md`). For any
+  type other than `new-system`, include an **Impact Analysis**: which existing
+  modules, foundation contracts, and handovers this change touches.
 - Propose the *what* and *why*; defer the *how* to `15-architecture`.
 - Follow OpenSpec proposal conventions (why / what changes / impact) so the file
   validates.

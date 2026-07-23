@@ -7,10 +7,11 @@ any design decision. This is the most important document in the lifecycle.
 
 ## Inputs
 - `openspec/changes/<change-id>/design.md` + spec deltas (module boundaries)
-- `.ai/domain/<change-id>/domain-model.md`
-- `.ai/contracts/<change-id>/contracts.md` (frozen)
-- `.ai/golden/<change-id>/golden-module.md` (the pattern to copy)
-- `.ai/engineering-guide/<change-id>.md`
+- `.ai/domain/<change-id>/domain-model.md` (or `.ai/foundation/` domain, for deltas)
+- Contracts: `.ai/contracts/<change-id>/contracts.md` if present, else
+  `.ai/foundation/contracts.md` (frozen)
+- Golden Module: `.ai/foundation/golden-module.md` (the pattern to copy)
+- Engineering Guide: `.ai/foundation/engineering-guide.md` (or per-change addendum)
 - Template: `aeos/templates/handover.template.md`
 
 ## Rules

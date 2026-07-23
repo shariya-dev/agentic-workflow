@@ -11,6 +11,11 @@ Run AEOS phase **00-discovery** for: $ARGUMENTS
    `/aeos:requirements <change-id>` creates `openspec/changes/<change-id>/`.
 3. Produce `.ai/idea.md` covering: problem, users, outcomes, constraints,
    success metrics, open questions.
-4. Finish by telling the human: review `.ai/idea.md` and record gate **G0**
+4. Propose a **Change-Type** (`new-system` / `new-module` / `module-change` /
+   `patch`) from the scope of the idea and whether `.ai/foundation/` already
+   exists — this decides how many phases run (`aeos/workflows/change-types.md`).
+   The human confirms it in the G0 record.
+5. Finish by telling the human: review `.ai/idea.md` and record gate **G0**
    using `aeos/templates/gate-record.template.md` →
-   `.ai/reviews/<change-id>-g0.md`. Next: `/aeos:requirements <change-id>`.
+   `.ai/reviews/<change-id>-g0.md`, setting `Change-Type`. Next:
+   `/aeos:requirements <change-id>`.

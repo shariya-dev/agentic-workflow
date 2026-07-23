@@ -41,6 +41,14 @@ starting to write code (the Golden Module) and the parallel explosion.
   deploy command); the release owner enforces it by process. `/aeos:docs`
   checks for the G3 record.
 
+## Gates by Change-Type
+
+Not every change hits every gate. G2 (authorize build) and G3 (ship) apply to
+**every** change. G0 applies to every change but is lightweight for small ones.
+G1 (design freeze) applies only when the change does design work (`new-system`,
+or a change that extends the architecture). Full mapping:
+`aeos/workflows/change-types.md`.
+
 ## Conditional Approval
 
 A gate record may carry `Decision: APPROVED-WITH-CONDITIONS` plus a Conditions

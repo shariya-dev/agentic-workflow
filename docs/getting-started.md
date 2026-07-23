@@ -77,6 +77,13 @@ Open the project in Claude Code; the `/aeos:*` commands are ready.
 
 ## A complete example, start to finish
 
+> **Heads-up:** this example walks the **full first-time path** (`new-system`) so
+> you see every phase once. You build the Golden Module and the rest of the
+> *foundation* only on this first pass — later changes reuse it and run far fewer
+> phases (a bug fix is ~4 steps). See
+> [Change Types](user-guide.md#do-i-run-all-18-phases-every-time-no) for the
+> shorter paths.
+
 Let's add a **password reset** feature. Its change id — shared by every
 document — is `password-reset`. After each command, review the output before
 moving on.

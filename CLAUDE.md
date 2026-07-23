@@ -13,6 +13,13 @@ This repository follows the **AEOS lifecycle**. Read this before doing anything.
    `APPROVED` or `APPROVED-WITH-CONDITIONS`.
 4. Do not edit anything under `aeos/` during project work — it is the framework,
    synced from upstream AEOS.
+5. **Not every change runs every phase.** Each change declares a `Change-Type`
+   (`new-system` / `new-module` / `module-change` / `patch`) in its G0 record;
+   that type selects which phases run and which project **foundation** (Golden
+   Module, Engineering Guide, base architecture, base contracts, in
+   `.ai/foundation/`) is reused rather than rebuilt. The Golden Module and
+   Engineering Guide are built **once** per project. See
+   `aeos/workflows/change-types.md`.
 
 ## Phase Write Permissions
 
@@ -26,10 +33,10 @@ In each phase you may write **only** to the locations listed:
 | Domain | `/aeos:domain` | `.ai/domain/<id>/` |
 | Architecture | `/aeos:architecture` | `openspec/changes/<id>/` (design.md, spec deltas) |
 | ADR | `/aeos:adr` | `.ai/adr/<id>/` |
-| Guardrails | `/aeos:guardrails` | `.ai/engineering-guide/<id>.md` |
+| Guardrails | `/aeos:guardrails` | `.ai/foundation/engineering-guide.md` (+ per-change addendum) |
 | **Stage 2 — Foundation** | | |
-| Golden Module | `/aeos:golden` | source tree (reference module) + `.ai/golden/<id>/` |
-| Contracts | `/aeos:contracts` | `.ai/contracts/<id>/` |
+| Golden Module | `/aeos:golden` | source tree (reference module) + `.ai/foundation/golden-module.md` |
+| Contracts | `/aeos:contracts` | `.ai/foundation/contracts.md` (base) or `.ai/contracts/<id>/` (delta) |
 | Handover | `/aeos:handover` | `.ai/handovers/<id>/` |
 | Tasks | `/aeos:tasks` | `.ai/blueprint/<id>/` + `openspec/changes/<id>/` (tasks.md, tasks/) |
 | **Stage 3 — Build** | | |
@@ -55,6 +62,8 @@ not, stop and tell the human which gate is missing.
 
 - Phase prompts: `aeos/prompts/` · Artifact templates: `aeos/templates/`
 - Phase registry: `aeos/workflows/phases.md` · Gates: `aeos/workflows/gates.md`
+  · Change types & right-sizing: `aeos/workflows/change-types.md`
+- Project foundation (built once, reused): `.ai/foundation/`
 - Engineering guide: `aeos/guide/` (+ adapter overrides in `aeos/adapters/`)
 - Current-truth specs: `openspec/specs/` · Active changes: `openspec/changes/`
 - Workspace artifacts: `.ai/`

@@ -207,7 +207,7 @@ function runInit() {
   }
 
   say('.ai/ (workspace scaffold)');
-  for (const d of ['blueprint', 'handovers', 'reports', 'reviews']) {
+  for (const d of ['foundation', 'domain', 'adr', 'engineering-guide', 'golden', 'contracts', 'blueprint', 'handovers', 'reports', 'reviews']) {
     scaffoldDir(path.join(TARGET, '.ai', d));
   }
 

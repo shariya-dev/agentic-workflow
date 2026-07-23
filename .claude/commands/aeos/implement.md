@@ -11,10 +11,10 @@ Run AEOS phase **50-implementation** for: $ARGUMENTS
 2. Read `aeos/prompts/50-implementation.md`. This is the per-agent briefing.
 3. Assemble the **context-isolated brief** for the given task — the agent
    receives ONLY these six things, nothing else:
-   - Golden Module — `.ai/golden/<change-id>/golden-module.md`
-   - Engineering Guide — `.ai/engineering-guide/<change-id>.md`
-   - Architecture — `openspec/changes/<change-id>/design.md`
-   - Contracts — `.ai/contracts/<change-id>/contracts.md`
+   - Golden Module — `.ai/foundation/golden-module.md`
+   - Engineering Guide — `.ai/foundation/engineering-guide.md`
+   - Architecture — `.ai/foundation/architecture.md` + `openspec/changes/<change-id>/design.md`
+   - Contracts — `.ai/foundation/contracts.md` + any `.ai/contracts/<change-id>/contracts.md` delta
    - Handover — the module handover named in the task frontmatter
    - Task — `openspec/changes/<change-id>/tasks/<task-id>.md`
 4. The agent builds one branch, staying inside its module scope, imitating the

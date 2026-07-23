@@ -2,8 +2,8 @@
 artifact: golden-module
 phase: 30-golden-module
 owner: ai
-inputs: ["openspec/changes/<change-id>/design.md", ".ai/engineering-guide/<change-id>.md", ".ai/domain/<change-id>/domain-model.md"]
-outputs: [".ai/golden/<change-id>/golden-module.md", "the reference module source + passing tests"]
+inputs: ["openspec/changes/<change-id>/design.md", ".ai/foundation/engineering-guide.md", ".ai/domain/<change-id>/domain-model.md"]
+outputs: [".ai/foundation/golden-module.md", "the reference module source + passing tests"]
 purpose: A written tour of the built reference module — the standard every other module imitates.
 validation: Names the built module; each layer (API, validation, repository, service, tests) documented; do's and don'ts present; tests pass.
 ---

@@ -14,10 +14,14 @@ Report AEOS lifecycle status. For each change id found in `openspec/changes/`
      (`.ai/contracts/<id>/`), handovers (`.ai/handovers/<id>/`), blueprint +
      tasks (`.ai/blueprint/<id>/`, `openspec/changes/<id>/tasks/`).
    - Stage 3: reports (`.ai/reports/<id>/`) incl. documentation.
-2. Check which gate records exist in `.ai/reviews/` (`-g0`,`-g1`,`-g2`,`-g3`)
-   and their Decision lines.
-3. Print a table: change id · furthest completed phase · last passed gate ·
-   next action (the exact `/aeos:*` command or gate to record).
-4. Flag inconsistencies: artifacts present without their preceding gate record,
-   a Stage-2/3 artifact without its authorizing gate, or a gate record
-   referencing missing artifacts.
+2. Check which gate records exist in `.ai/reviews/` (`-g0`,`-g1`,`-g2`,`-g3`),
+   their Decision lines, and the `Change-Type` from the G0 record.
+3. Note whether project foundation exists (`.ai/foundation/golden-module.md`,
+   `engineering-guide.md`, `architecture.md`, `contracts.md`).
+4. Print a table: change id · Change-Type · furthest completed phase · last
+   passed gate · next action — where "next action" follows the phase path for
+   that Change-Type in `aeos/workflows/change-types.md` (skipped/reused phases
+   are not listed as pending).
+5. Flag inconsistencies: artifacts present without their preceding gate record,
+   a Stage-2/3 artifact without its authorizing gate, a gate referencing missing
+   artifacts, or a non-`new-system` change with no project foundation to reuse.

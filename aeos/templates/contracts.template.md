@@ -2,8 +2,8 @@
 artifact: contracts
 phase: 35-contracts
 owner: ai
-inputs: [".ai/golden/<change-id>/golden-module.md", "openspec/changes/<change-id>/design.md", ".ai/domain/<change-id>/domain-model.md"]
-outputs: [".ai/contracts/<change-id>/contracts.md"]
+inputs: [".ai/foundation/golden-module.md", "openspec/changes/<change-id>/design.md", ".ai/domain/<change-id>/domain-model.md"]
+outputs: [".ai/foundation/contracts.md (base) or .ai/contracts/<change-id>/contracts.md (delta)"]
 purpose: The frozen set of interfaces modules share, so parallel agents build against stable contracts.
 validation: Every shared API/DTO/event/interface/DB-contract/message listed; marked FROZEN with version+date; consistent with spec deltas.
 ---

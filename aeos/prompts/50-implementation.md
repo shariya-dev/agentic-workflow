@@ -6,10 +6,12 @@ boundary, imitating the Golden Module. (This prompt is the per-agent briefing
 the orchestrator gives each parallel agent.)
 
 ## Inputs — you receive ONLY these six things. Nothing else.
-1. The **Golden Module** — `.ai/golden/<change-id>/golden-module.md` (the pattern to copy)
-2. The **Engineering Guide** — `.ai/engineering-guide/<change-id>.md`
-3. The **Architecture** — `openspec/changes/<change-id>/design.md`
-4. The **Contracts** — `.ai/contracts/<change-id>/contracts.md` (frozen)
+1. The **Golden Module** — `.ai/foundation/golden-module.md` (the pattern to copy)
+2. The **Engineering Guide** — `.ai/foundation/engineering-guide.md`
+3. The **Architecture** — `.ai/foundation/architecture.md` + this change's
+   `openspec/changes/<change-id>/design.md`
+4. The **Contracts** — `.ai/foundation/contracts.md` + any
+   `.ai/contracts/<change-id>/contracts.md` delta (frozen)
 5. Your **Handover** — `.ai/handovers/<change-id>/<module>.handover.md`
 6. Your **Tasks** — `openspec/changes/<change-id>/tasks/<task-id>.md`
 

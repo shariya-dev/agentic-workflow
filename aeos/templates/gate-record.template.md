@@ -12,6 +12,7 @@ validation: Decision is one of APPROVED / APPROVED-WITH-CONDITIONS / REJECTED; a
 
 - **Gate:** G<n> (<idea G0 | design G1 | foundation G2 | release G3>)
 - **Change:** `<change-id>`
+- **Change-Type:** <new-system | new-module | module-change | patch>  <!-- set at G0; selects which phases/gates apply — see aeos/workflows/change-types.md -->
 - **Approver:** <name / role>
 - **Date:** <YYYY-MM-DD>
 

@@ -215,7 +215,7 @@ done
 
 # 4. Workspace scaffold: .ai/ (empty, no example content)
 say ".ai/ (workspace scaffold)"
-for d in blueprint handovers reports reviews; do
+for d in foundation domain adr engineering-guide golden contracts blueprint handovers reports reviews; do
   scaffold_dir "$TARGET/.ai/$d"
 done
 

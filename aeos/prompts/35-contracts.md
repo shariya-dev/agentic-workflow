@@ -5,11 +5,21 @@ You are an architect freezing every interface modules share, so parallel agents
 can build against stable contracts without colliding.
 
 ## Inputs
-- `.ai/golden/<change-id>/golden-module.md` + the reference module (contract
-  patterns proven in practice)
+- `.ai/foundation/golden-module.md` + the reference module (contract patterns
+  proven in practice)
 - `openspec/changes/<change-id>/design.md` + spec deltas
 - `.ai/domain/<change-id>/domain-model.md`
 - Template: `aeos/templates/contracts.template.md`
+
+## Change-type & foundation
+- The **base contracts** are project-level foundation. On a `new-system` change
+  (or when `.ai/foundation/contracts.md` is missing), write them to
+  `.ai/foundation/contracts.md`.
+- On a `new-module` change, write only the **delta** — the new shared interfaces
+  this change adds — to `.ai/contracts/<change-id>/contracts.md`, layered on the
+  foundation.
+- On a `patch` / `module-change` that touches no shared interface, SKIP this
+  phase; the frozen contracts are unchanged. See `aeos/workflows/change-types.md`.
 
 ## Rules
 - Never design while implementing; never implement while designing. This phase
@@ -25,7 +35,8 @@ can build against stable contracts without colliding.
   with impact analysis).
 
 ## Output
-`.ai/contracts/<change-id>/contracts.md` — the frozen shared-interface set,
+Base contracts → `.ai/foundation/contracts.md`; per-change additions →
+`.ai/contracts/<change-id>/contracts.md`. Either way, the shared-interface set is
 marked FROZEN with a version/date.
 
 ## Handoff

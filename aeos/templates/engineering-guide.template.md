@@ -3,7 +3,7 @@ artifact: engineering-guide
 phase: 25-guardrails
 owner: ai
 inputs: ["openspec/changes/<change-id>/design.md", "aeos/guide/", "active adapter guide-overrides.md"]
-outputs: [".ai/engineering-guide/<change-id>.md"]
+outputs: [".ai/foundation/engineering-guide.md"]
 purpose: Pin, for this change, the standards every module must follow — by reference to the static guide plus change-specific additions.
 validation: All 8 guide areas referenced; adapter named; change-specific slots either filled or explicitly marked TODO. Does not restate the static guide.
 ---

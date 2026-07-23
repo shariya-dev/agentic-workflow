@@ -2,7 +2,7 @@
 artifact: handover
 phase: 40-handover
 owner: ai
-inputs: ["openspec/changes/<change-id>/design.md", ".ai/domain/<change-id>/domain-model.md", ".ai/contracts/<change-id>/contracts.md", ".ai/golden/<change-id>/golden-module.md", ".ai/engineering-guide/<change-id>.md"]
+inputs: ["openspec/changes/<change-id>/design.md", ".ai/domain/<change-id>/domain-model.md", ".ai/contracts/<change-id>/contracts.md", ".ai/foundation/golden-module.md", ".ai/foundation/engineering-guide.md"]
 outputs: [".ai/handovers/<change-id>/<module>.handover.md"]
 purpose: The instruction manual one AI engineer needs to build one module without re-deriving any design decision.
 validation: Every section non-empty; APIs/events match the frozen contracts; Do's/Don'ts and Out-of-Scope present; every acceptance criterion is testable.
@@ -11,7 +11,7 @@ validation: Every section non-empty; APIs/events match the frozen contracts; Do'
 # Module Handover: <module-name>
 
 > Change: `<change-id>` · Contracts: `.ai/contracts/<change-id>/contracts.md` ·
-> Golden Module: `.ai/golden/<change-id>/golden-module.md`
+> Golden Module: `.ai/foundation/golden-module.md`
 
 ## 1. Business Goal
 <!-- One paragraph: why this module exists and the value it delivers. -->

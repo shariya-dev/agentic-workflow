@@ -24,9 +24,18 @@ no agent invents its own patterns.
   rules, review rules.
 - This artifact is one of the six things every Stage-3 agent receives.
 
+## Change-type & foundation
+- The Engineering Guide is **project-level foundation**, pinned **once**. Write
+  `.ai/foundation/engineering-guide.md` when the change type is `new-system` or
+  it does not yet exist. For later change types, reuse the foundation guide and
+  SKIP this phase (add a short `.ai/engineering-guide/<change-id>.md` addendum
+  only if this change introduces genuinely new standards). See
+  `aeos/workflows/change-types.md`.
+
 ## Output
-`.ai/engineering-guide/<change-id>.md` — a per-change guardrail sheet pinning the
+`.ai/foundation/engineering-guide.md` — the pinned guardrail sheet referencing the
 static guide + adapter, with change-specific slots filled or marked TODO.
+(Project-level foundation, reused by every later change.)
 
 ## Handoff
 Human reviews the full Stage-1 design set at gate **G1** (design frozen,

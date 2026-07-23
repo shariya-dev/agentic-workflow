@@ -89,6 +89,33 @@ If you run a command too early, it stops and tells you exactly what's missing.
 
 ---
 
+## Do I run all 18 phases every time? No.
+
+Running the full pipeline for a one-line bug fix would be absurd. Most phases
+build **foundation** — the Golden Module, Engineering Guide, base architecture,
+and base contracts — which you build **once** and then *reuse* on every later
+change. A change consumes the foundation; it doesn't rebuild it.
+
+Each change declares a **Change-Type** in its G0 record, and that picks the path:
+
+| Change type | Example | What runs | Reuses |
+|-------------|---------|-----------|--------|
+| **`new-system`** | A brand-new app, or a major new subsystem | **All 18** — the one time you build the Golden Module + foundation | — (creates it) |
+| **`new-module`** | Add "invoicing" to an existing app | requirements → domain delta → contracts delta → handover → tasks → implement → test → review | Golden Module, guide, architecture, base contracts |
+| **`module-change`** | Change how invoices are numbered | requirements → update handover → tasks → implement → test → review | everything except the one handover |
+| **`patch`** | Fix a rounding bug | requirements (impact note) → implement → test → review | everything |
+
+Gates right-size too: **G2 (authorize build)** and **G3 (ship)** always apply;
+**G0** is lightweight for small changes; **G1 (design freeze)** only applies when
+the change actually does design work. So a bug fix is roughly *four* steps, not
+eighteen. Full rules: `aeos/workflows/change-types.md`.
+
+**The rest of this guide walks the full `new-system` path** (building the
+foundation). For a smaller change, follow your row above — skip the phases it
+doesn't list, and the commands will reuse `.ai/foundation/` automatically.
+
+---
+
 ## Stage 1 — Design (documents only, no code)
 
 ### Phase 00 · Discovery
@@ -479,10 +506,11 @@ evolution.
 
 ## The lite path (small changes)
 
-18 phases is a lot for a one-line fix. For small changes you may collapse Domain
-Discovery + Modeling into one short pass, skip formal event storming, and keep
-gate records brief. The gates still apply — the ceremony scales to the size of
-the work, the safety doesn't.
+See **[Do I run all 18 phases every time?](#do-i-run-all-18-phases-every-time-no)**
+above — the Change-Type you set at G0 decides which phases run. A `patch` is
+about four steps; a `new-module` reuses the whole foundation and skips the
+golden module. The gates that matter (G2 authorize, G3 ship) still apply — the
+ceremony scales to the size of the work, the safety doesn't.
 
 ---
 

@@ -15,14 +15,14 @@ build every module in parallel against them.
 | `10-domain` | Domain Discovery & Modeling | AI drafts, human approves | proposal.md | `.ai/domain/<id>/domain-model.md` | bounded contexts + structural model + event-storming section |
 | `15-architecture` | Architecture + Tech Freeze | AI drafts, human approves | proposal.md, domain-model.md | `design.md` + spec deltas | arch style + module boundaries + frozen stack; deltas validate |
 | `20-adr` | Architecture Decision Records | AI drafts, human approves | design.md | `.ai/adr/<id>/ADR-NNN-*.md` | one ADR per significant decision, with alternatives |
-| `25-guardrails` | Engineering Guide (pinned) | AI drafts, human approves | design.md, `aeos/guide/`, adapter | `.ai/engineering-guide/<id>.md` | all 8 guide areas referenced; adapter named |
+| `25-guardrails` | Engineering Guide (pinned) | AI drafts, human approves | design.md, `aeos/guide/`, adapter | `.ai/foundation/engineering-guide.md` | all 8 guide areas referenced; adapter named |
 
 ## Stage 2 — Foundation (first code + frozen contracts + handover package)
 
 | Id | Phase | Owner | Inputs | Output artifact | Validation |
 |----|-------|-------|--------|-----------------|------------|
-| `30-golden-module` | Golden Module | AI, human approves | G1 record, design, guide, domain | reference module (code) + `.ai/golden/<id>/golden-module.md` | module built; tests pass; layers documented |
-| `35-contracts` | Freeze Contracts | AI drafts, human approves | golden-module.md, design, domain | `.ai/contracts/<id>/contracts.md` | all shared interfaces listed; marked FROZEN |
+| `30-golden-module` | Golden Module | AI, human approves | G1 record, design, guide, domain | reference module (code) + `.ai/foundation/golden-module.md` | module built; tests pass; layers documented |
+| `35-contracts` | Freeze Contracts | AI drafts, human approves | golden-module.md, design, domain | `.ai/foundation/contracts.md` (base) or `.ai/contracts/<id>/` (delta) | all shared interfaces listed; marked FROZEN |
 | `40-handover` | Module Handovers | AI | design, domain, contracts, golden, guide | `.ai/handovers/<id>/<module>.handover.md` | all sections filled; APIs/events match contracts |
 | `45-tasks` | Impl Blueprint + Tasks | AI | handovers, design, contracts | `.ai/blueprint/<id>/blueprint.md` + `openspec/changes/<id>/tasks/` | waves acyclic; each task atomic with verification command |
 
@@ -38,11 +38,20 @@ build every module in parallel against them.
 Deployment follows G3; `openspec archive <id>` folds deltas into
 `openspec/specs/` and closes the change.
 
+## Foundation & Change Types
+
+The table above is the **`new-system` path** — the one time all phases run and the
+project **foundation** (Golden Module, Engineering Guide, base architecture, base
+contracts, in `.ai/foundation/`) is created. Later changes declare a `Change-Type`
+(`new-module` / `module-change` / `patch`) that reuses the foundation and runs
+only the phases it needs. Full decision table: `aeos/workflows/change-types.md`.
+
 ## Context-Isolation Contract (Stage 3)
 
 Every parallel-dev agent (`50-implementation`) receives **only**: Golden Module ·
 Engineering Guide · Architecture · Contracts · its own Handover · its own Tasks.
-Nothing else.
+Nothing else. (Golden Module, Engineering Guide, base architecture and base
+contracts come from `.ai/foundation/`; the change adds only its deltas.)
 
 ## Artifact Dependency Graph
 
